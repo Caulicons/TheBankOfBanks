@@ -1,37 +1,25 @@
 import inquirer from "inquirer";
-import logo from "./logo.js";
 import menu_options from "../data/menuOptions.js";
 import exit from "./exit.js";
-import Account from "../model/Account.js";
+import keyPress from "./keyPress.js";
+import AccountController from "../controller/AccountController.js";
 
 export default async function menu() {
-  await logo();
-
-  const c1 = new Account(1, 1, 1, "John shimbinha", 1000);
-  /* const c2 = new Account(2, 2, 2, "Mary", 200);
-  const c3 = new Account(3, 3, 3, "Jane", 300); */
-
-  c1.info();
-  c1.withdraw(500);
-  c1.info();
-  c1.deposit(1000);
-  c1.info();
-
   const response = await inquirer.prompt({
-    type: "list",
+    type: "rawlist",
     name: "question",
-    message: "What do you want to do?",
+    prefix: "\n🏦",
+    message: "What do you want to do?\n",
     choices: menu_options,
   });
 
-  handleMenuResponse(response.question);
-
-  console.log(response.question);
+  await handleMenuResponse(response.question);
 }
 
-function handleMenuResponse(response: number) {
+async function handleMenuResponse(response: number) {
   if (response === 9) exit();
 
+  const account = new AccountController();
   switch (response) {
     case 1:
       console.log("\n\nCriar Conta\n\n");
@@ -66,4 +54,6 @@ function handleMenuResponse(response: number) {
 
       break;
   }
+
+  await keyPress();
 }
