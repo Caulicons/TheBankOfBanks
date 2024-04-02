@@ -241,16 +241,68 @@ async function handleMenuResponse(response: number) {
 
       break;
     case 6:
-      console.log("\n\nSaque\n\n");
+      const question_to_withdraw = await inquirer.prompt([
+        {
+          type: "number",
+          name: "id",
+          prefix: "\n❓ ",
+          message: "What is the Account ID that you want withdraw?\n",
+        },
+        {
+          type: "number",
+          name: "amount",
+          prefix: "\n💸 ",
+          message: "What is the amount?\n",
+        },
+      ]);
 
+      Account.withdraw(question_to_withdraw.id, question_to_withdraw.amount);
       break;
     case 7:
-      console.log("\n\nDepósito\n\n");
+      const question_to_deposit = await inquirer.prompt([
+        {
+          type: "number",
+          name: "id",
+          prefix: "\n❓ ",
+          message: "What is the Account ID that you want deposit?\n",
+        },
+        {
+          type: "number",
+          name: "amount",
+          prefix: "\n💸 ",
+          message: "What is the amount?\n",
+        },
+      ]);
 
+      Account.deposit(question_to_deposit.id, question_to_deposit.amount);
       break;
     case 8:
-      console.log("\n\nTransferência entre Contas\n\n");
+      const question_to_transfer = await inquirer.prompt([
+        {
+          type: "number",
+          name: "origin_id",
+          prefix: "\n❓ ",
+          message: "What is your Account ID?\n",
+        },
+        {
+          type: "number",
+          name: "destination_id",
+          prefix: "\n❓ ",
+          message: "What is the Account ID that you want transfer?\n",
+        },
+        {
+          type: "number",
+          name: "amount",
+          prefix: "\n💸 ",
+          message: "What is the amount?\n",
+        },
+      ]);
 
+      Account.transfer(
+        question_to_transfer.origin_id,
+        question_to_transfer.destination_id,
+        question_to_transfer.amount
+      );
       break;
   }
 
