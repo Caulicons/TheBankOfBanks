@@ -1,4 +1,4 @@
-export default class Account {
+export default abstract class Account {
   private _id: number;
   private _agency: number;
   private _type: number;
@@ -69,23 +69,23 @@ export default class Account {
 
   public withdraw(amount: number): boolean {
     if (amount > this._balance) {
-      console.log("Insufficient funds");
+      console.log("Insufficient funds. ❌");
       return false;
     }
     this._balance -= amount;
+
     return true;
   }
 
   public info(): void {
     console.log(`
-    *****************************************************
-         Account infos 
-    *****************************************************
-    ID: ${this._id}
-    Agency: ${this._agency}
-    Type: ${this._type}
-    Card Holder: ${this._cardHolder}
-    Balance: R$${this._balance}
-    `);
+**************************************************************
+          🏦 ${this._cardHolder} Account - infos 
+**************************************************************
+ID: ${this._id}
+Agency: ${this._agency}
+Type: ${this._type == 1 ? "Current Account" : "Save Account"}
+Card Holder: ${this._cardHolder}
+Balance: R$ ${this._balance.toFixed(2)}`);
   }
 }
